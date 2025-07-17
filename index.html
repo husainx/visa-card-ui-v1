@@ -40,7 +40,7 @@
         />
         <canvas
           id="background"
-          class="w-full h-full scale-[200%] md:scale-[120%] md:scale-100 absolute top-20 left-0 z-10 mix-blend-overlay opacity-70"
+          class="w-full h-full scale-[140%] md:scale-[120%] md:scale-100 absolute top-20 left-0 z-10 mix-blend-luminosity opacity-40"
         ></canvas>
       </div>
       <img
@@ -52,7 +52,7 @@
       <img
         src="assets/images/artwork.svg"
         alt="Background"
-        class="w-full absolute bottom-10 left-0 z-10 scale-300 opacity-10 mix-blend-screen"
+        class="w-full absolute bottom-10 left-0 z-10 scale-300 opacity-30 mix-blend-overlay"
       />
       <!-- Header section -->
       <div
@@ -107,7 +107,9 @@
         <!-- Visa Details -->
         <div class="border-t border-white/30 pt-6">
           <div class="flex flex-col gap-4 mb-4 text-white">
-            <p class="text-sm opacity-80">Visa Details</p>
+            <p class="text-sm opacity-80 tracking-widest uppercase">
+              Visa Details
+            </p>
           </div>
           <div class="grid grid-cols-2 gap-4 mb-4 text-white">
             <div>
@@ -182,7 +184,6 @@
           },
         });
 
-        // Keep responsive on window resize
         window.addEventListener("resize", () => {
           resizeCanvas();
           instance.resizeDrawingSurfaceToCanvas();
@@ -191,7 +192,6 @@
         return instance;
       }
 
-      // Setup each artboard
       setupRive("headerCanvas", "header");
       setupRive("canvas2", "footer");
 
