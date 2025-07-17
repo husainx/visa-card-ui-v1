@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+      html,
+      body {
+        /* margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden; */
+      }
+      /* #background {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+      } */
+    </style>
+  </head>
+  <body class="w-screen overflow-x-hidden">
+    <div
+      id="container"
+      class="relative min-w-screen w-full md:w-[500px] md:min-w-[500px] rounded-2xl overflow-hidden min-h-screen md:h-[1190px] h-[1100px] flex flex-col items-center overflow-hidden"
+    >
+      <!-- Background canvas that covers entire viewport -->
+      <div
+        class="absolute min-w-screen md:w-[500px] md:min-w-[500px] md:h-[1190px] h-[1100px] overflow-hidden rounded-2xl -z-10 top-0 left-0 bg-blue-200"
+      >
+        <img
+          src="assets/images/bgonly.png"
+          alt="Background"
+          class="w-full h-full -z-20"
+        />
+        <canvas
+          id="background"
+          class="w-full h-full scale-[200%] md:scale-[120%] md:scale-100 absolute top-20 left-0 z-10 mix-blend-overlay opacity-70"
+        ></canvas>
+      </div>
+      <img
+        src="assets/images/artwork.svg"
+        alt="Background"
+        class="w-full absolute top-0 left-0 z-10 rotate-180 scale-190 opacity-30 mix-blend-overlay"
+      />
+
+      <img
+        src="assets/images/artwork.svg"
+        alt="Background"
+        class="w-full absolute bottom-10 left-0 z-10 scale-300 opacity-10 mix-blend-screen"
+      />
+      <!-- Header section -->
+      <div
+        id="header"
+        class="relative w-full p-3 h-[100px] mt-4 md:h-[110px] z-20 bg-black/20"
+      >
+        <canvas id="headerCanvas" class="w-full h-full"></canvas>
+      </div>
+
+      <!-- Content area -->
+      <div
+        id="content"
+        class="relative w-[400px] md:w-[400px] w-screen min-h-[400px] z-10 p-8"
+      >
+        <!-- Photo and Name Section -->
+        <div class="flex flex-col items-center mb-8">
+          <div
+            class="w-32 h-40 bg-white rounded-lg border-4 border-emerald-100 mb-4 overflow-hidden"
+          >
+            <img
+              src="https://i.pravatar.cc/150?u=uniqueUserId12"
+              alt="Profile Photo"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <h1 class="text-xl font-medium text-white text-center">
+            Muthuswami Venugopal Iyer
+          </h1>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="grid grid-cols-2 gap-4 mb-6 text-white">
+          <div>
+            <p class="text-sm opacity-80">Gender</p>
+            <p class="font-semibold text-lg">Male</p>
+          </div>
+          <div>
+            <p class="text-sm opacity-80">Nationality</p>
+            <p class="font-semibold text-lg">Indian</p>
+          </div>
+          <div>
+            <p class="text-sm opacity-80">Date of Birth</p>
+            <p class="font-semibold text-lg">17/03/2002</p>
+          </div>
+
+          <div>
+            <p class="text-sm opacity-80">Passport No.</p>
+            <p class="font-semibold">V1251024</p>
+          </div>
+        </div>
+
+        <!-- Visa Details -->
+        <div class="border-t border-white/30 pt-6">
+          <div class="flex flex-col gap-4 mb-4 text-white">
+            <p class="text-sm opacity-80">Visa Details</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4 text-white">
+            <div>
+              <p class="text-sm opacity-80">Visa Type</p>
+              <p class="font-semibold">Work Visa</p>
+            </div>
+            <div>
+              <p class="text-sm opacity-80">Visa No</p>
+              <p class="font-semibold">55673/2024</p>
+            </div>
+            <div>
+              <p class="text-sm opacity-80">Valid from</p>
+              <p class="font-semibold">15/12/2024</p>
+            </div>
+            <div>
+              <p class="text-sm opacity-80">Valid Until</p>
+              <p class="font-semibold">15/12/2026</p>
+            </div>
+            <div>
+              <p class="text-sm opacity-80">No. of Entries</p>
+              <p class="font-semibold">10</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 text-white">
+            <div>
+              <p class="text-sm opacity-80">Details</p>
+              <p class="font-semibold text-sm">Abdulla Wisham(A12376)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="w-[200px] h-[200px] bg-black/20 absolute bottom-10 rounded-xl left-1/2 transform -translate-x-1/2 bg-white z-30"
+      >
+        <img
+          src="assets/images/artwork.svg"
+          alt="Background"
+          class="w-full h-full"
+        />
+      </div>
+
+      <!-- Footer section -->
+      <div id="footer" class="relative w-full scale-[175%] z-10">
+        <canvas id="canvas2" class="w-full h-full"></canvas>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/@rive-app/canvas"></script>
+    <script>
+      const container = document.getElementById("container");
+
+      function setupRive(id, artboardName) {
+        const canvas = document.getElementById(id);
+
+        function resizeCanvas() {
+          backgroundCanvas.width = window.innerWidth;
+          backgroundCanvas.height = window.innerHeight;
+        }
+
+        const instance = new rive.Rive({
+          src: "assets/rive/Visa.riv",
+          canvas: canvas,
+          autoplay: true,
+          stateMachines: ["State Machine 1"],
+          artboard: artboardName,
+          fit: rive.Fit.Contain,
+          onLoad: () => {
+            // resizeCanvas();
+            instance.resizeDrawingSurfaceToCanvas();
+          },
+        });
+
+        // Keep responsive on window resize
+        window.addEventListener("resize", () => {
+          resizeCanvas();
+          instance.resizeDrawingSurfaceToCanvas();
+        });
+
+        return instance;
+      }
+
+      // Setup each artboard
+      setupRive("headerCanvas", "header");
+      setupRive("canvas2", "footer");
+
+      // Setup background artboard
+      const backgroundCanvas = document.getElementById("background");
+      function resizeBackground(width, height) {
+        backgroundCanvas.style.height = height * 2 + "px";
+        backgroundCanvas.style.width = width + "px";
+        backgroundCanvas.style.left = "-" + width / 2 + "px";
+        // Make background wider than viewport to extend out of view
+        // backgroundCanvas.width = window.innerWidth * 2; // 120% of viewport width
+        // backgroundCanvas.height = window.innerHeight * 5.3;
+        // backgroundCanvas.style.width = window.innerWidth * 1.2 + "px";
+        // backgroundCanvas.style.height = window.innerHeight + "px";
+        // backgroundCanvas.style.left = "-" + window.innerWidth * 0 + "px"; // Offset by 10%
+      }
+      // resizeBackground();
+      // backgroundCanvas.width = backgroundCanvas.offsetWidth;
+      // backgroundCanvas.height = backgroundCanvas.offsetHeight;
+
+      const backgroundRive = new rive.Rive({
+        src: "assets/rive/Visa.riv",
+        canvas: backgroundCanvas,
+        autoplay: true,
+        stateMachines: ["State Machine 1"],
+        artboard: "background",
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+        onLoad: () => {
+          backgroundCanvas.width = backgroundCanvas.offsetWidth;
+          backgroundCanvas.height = backgroundCanvas.offsetHeight;
+          const artboard = backgroundRive.artboard;
+          const height = artboard.bounds.maxY - artboard.bounds.minY;
+          const width = artboard.bounds.maxX - artboard.bounds.minX;
+          console.log("Artboard size:", width, height);
+          backgroundRive.resizeDrawingSurfaceToCanvas();
+        },
+      });
+
+      window.addEventListener("resize", () => {
+        resizeBackground();
+        backgroundRive.resizeDrawingSurfaceToCanvas();
+      });
+    </script>
+  </body>
+</html>
